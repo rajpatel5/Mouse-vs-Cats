@@ -1,7 +1,7 @@
 # Mouse-vs-Cats
 This assignment was assigned by the 309 (Programming on the Web) course instructor at the University of Toronto.
 There are 4 assignments displaying the various algorithms and concepts used in artificial intelligence.
-The mouse has to get all the pieces of cheese without being caught by the cats with a maze. Cats are manually
+The mouse has to get all the pieces of cheese without being caught by the cats within a maze. Cats are manually
 set to various levels of smartness; the smarter the cat, the harder to get the cheese. 
 
 **Note**: A4 does not have a visual representation of the mouse and cats moving nor the maze.
