@@ -1,5 +1,5 @@
 # Mouse-vs-Cats
-This assignment was assigned by the 309 (Programming on the Web) course instructor at the University of Toronto.
+This assignment was assigned by the D84 (Artificial Intelligence) course instructor at the University of Toronto.
 There are 4 assignments displaying the various algorithms and concepts used in artificial intelligence.
 The mouse has to get all the pieces of cheese without being caught by the cats within a maze. Cats are manually
 set to various levels of smartness; the smarter the cat, the harder to get the cheese. 
