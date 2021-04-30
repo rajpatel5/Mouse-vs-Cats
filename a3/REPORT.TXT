@@ -1,0 +1,303 @@
+CSC D84 - Artificial Intelligence
+
+Assignment 3 - Reinforcement Learning - Q Learning
+
+This assignment is worth:
+
+10 AIUs (Artificial Intelligence Units)
+toward the assignment component of your final
+mark.
+
+________________________________________________
+
+Student Name 1 (last, first): Patel, Raj
+
+Student Name 2 (last, first): Patel, Harshit
+
+Student number 1: 1005240721
+
+Student number 2: 1004779215
+
+UTORid 1: patel732
+
+UTORid 2: patel564
+
+READ THIS AND SIGN YOUR NAME AT THE END:
+
+ I certify that I have read the UTSC code on academic
+honesty and plaguarism. All work submitted as part
+of this assignment is my own.
+
+	Signed: __Raj Patel__	__Harshit Patel__
+
+
+(-5 marks for failing to provide the identifying
+ information requested above)
+________________________________________________
+
+Answer the following questions. Be concise and clear
+but explain carefully when needed.
+
+1 .- (1 mark) Explain your reward function. What game elements
+      are used, and why you think this is a good reward function
+      for this problem.
+
+	The reward function takes into consideration the distance from the mouse
+    to the cheeses and the cats. It also takes into consideration the relative distance 
+	from the mouse to the cats and cheeses, and the number of walls around the 
+	mouse's current position. 
+
+	A very high positive reward is given to the mouse if the mouse eats the cheese. 
+	A very high negative reward is given to the mouse if it is eaten by the cat. If the mouse 
+	is in a dead end in it's position, the reward is lowered (if there is no cheese at that 
+	location). If it's closer to a cheese than a cat then the reward is positive. If the mouse is 
+	closer to a cat than a cheese then the reward is negative.
+	
+    This is a good reward function because the distances train the mouse to run farther away
+    from the cats and move closer to the cheeses. Additionally, taking into consideration the 
+	number of walls that surrounds the mouse, training the mouse to avoid the dead ends. 
+
+
+2 .- These are multiple experiments (once you are sure your 
+     QLearning code is working!) 
+
+     * IMPORTANT! * For each training run, SAVE the Qtable
+     you will re-use the Qtables later.
+
+     (1 mark) # Experiment 1, 1000000 training trials, 20 rounds, random seed 1522,
+     # 8x8 grid, cat-smartness .9
+
+     Initial mouse winning rate (first rate obtained when training starts): 6.8574%
+
+     Train your mouse, and once trained, run the evaluation and  
+     record the mouse winning rate: 85.7830%
+
+     (1 mark) # Experiment 2, 1000000 training trials, 50 rounds, random seed 1522,
+     # 8x8 grid, cat-smartness .9
+
+     Initial mouse winning rate (first rate obtained when training starts): 6.5067%
+
+     Train your mouse, and once trained, run the evaluation and  
+     record the mouse winning rate: 86.9818%
+
+     (1 mark) Would the mouse keep improving and become invincible if
+     you ran, say, 100,000,000 training rounds per batch?     
+
+	Not really, the mouse could spawn in a bad spot resulting in a loss almost
+	immediately, for example a dead end next to a smart cat. The mouse would make a
+	move given the state and possible actions, but it would make a bad move due to 
+	the state it's in.
+
+
+4 .- Using the QTable saved from Experiment 2 (NO re-training!)
+
+     (1 mark) # Experiment 3 - Run the evaluation on the 8x8 grid, cat-smartness=.9,
+     # but using the random seed 4289 for the game.
+	
+     Mouse Winning Rate: 33.3006% (Average Success Rate)
+
+     (2 mark) # Experiment 4 - Run the evaluation on the 8x8 grid, cat-smartness=.9,
+     # but using the random seed 31415 for the game.
+	
+     Mouse Winning Rate: 46.5049% (Average Success Rate)
+
+     Average rate for Experiement 3 and Experiment 4: (33.3006 + 46.5049) / 2 = 39.90275%
+
+     (1 mark) Compare with the rate obtained in experiment 2. What is happening here?
+     We didn't train the mouse the seeds other than 1522, so the winning rate is lower.
+
+    The rate is much lower than experient 2, because the environment is not static, which is what
+    the mouse was trained in. Since the environment layout changes the mouse doesn't know how 
+    to perform on it, and so it performs poorly.
+
+
+5 .- Understanding the effects of state space on learning ability:
+
+     (1 mark) # Experiment 5 - Train your mouse on the 16x16 grid, using random seed
+     # 1522, 1000000 trials, and 50 training rounds. Cat-smartness=.9
+
+     Initial mouse winning rate (first rate obtained when training starts): 2.8497%
+
+     Mouse Winning Rate (from evaluation after training): 59.7898% (Average Success Rate)
+
+     (1 mark) Compare the final winning rate with that from Experiment 2, what can
+     you say about the difference in winning rates?
+
+    The winning rate is lower than Experiment 2 because the state space is larger for the 16x16 
+    grid. The mouse needs to be trained longer in order to get a winning rate similar to the 
+    one on the 8x8 grid.
+
+
+6 .- (2 marks) Is standard Q-Learning a reasonable strategy for environments
+     that change constantly? discuss based on the above
+	
+	It isn't because training using standard Q-Learning needs a static environment, since the states 
+	or size of the Q-Table remain the same regardless of the changing environment. As seen in the 
+	previous experiments, when the mouse is being trained using standard Q-Learning in one seed, 
+	using the same table for another new seed results in poor performance of the mouse since the best
+	action depending on the state in where the mouse was first trained might be completely different 
+	from the best action given an equivalent state in another seed.
+	
+
+7 .- (3 marks) Explain your feature set for feature-based Q Learning, and
+               explain why and how each feature is expected to contribute
+	        to helping your mouse win
+
+	The features we have implemented have to do with minimizing the distance to the cheese
+	and maximizing the distance to any of the cats, and trying to minimize the ratio between
+	both distances.
+	
+	Feature 1: Closest cat - Attempts to maximize distance from nearest cat so mouse cannot be eaten
+
+	Feature 2: Closest cheese - Incentivizes the mouse to move towards nearest cheese, so mouse will win
+
+  	Feature 3 - Reward given based on ratio between minimum cat distance and minimum cheese distance. 
+		    This is so that the mouse is incentivized to take actions which minimize cheese distance 
+		    while also maximizing cat distance during the same move.
+  	
+	Feature 4 - Disincentivizes dead ends unless a cheese is there. It attempts to prevent the mouse not 
+		    to move into dead ends otherwise it will get itself trapped.
+
+  	Feature 5 - Attempts to maximize the mean distance from the mouse to the cats so that the mouse avoids
+	 	    areas with lot's of cats (It also attempts to avoid these areas even if cheese is present 
+		    at these locations)
+
+
+8 .- Carry out the following experiments:
+
+     (1 mark) # Experiment 6: Train your mouse using feature-based Q-Learning, on
+     # the 16x16 grid, one cat, and one cheese, cat-smartness=.9,  
+     # random seed = 1522, and use 1000000 trials and 50 rounds. 
+
+     Initial mouse winning rate (first rate obtained when training starts): 3.2149%
+     
+     Mouse Winning Rate (from evaluation after training): 87.1191% (Average Success Rate)
+
+     Compare this rate against the rate obtained in Experiment #5, what
+     are your conclusions regarding the utility of feature-based
+     Q-Learning?
+
+     It's a much better win rate than experiement 5!
+
+     (1 mark) # Experiment 7, using the saved weights from Experiment 6 (no
+     # re-training) run the evaluation using random seed 4289, same
+     # 1 cheese, 1 cat, and cat-smartness=.9, 16x16 grid
+
+     Mouse Winning Rate (from evaluation after training): 86.4165% (Average Success Rate)
+
+     (1 mark) # Experiment 8, using the saved weights from Experiment 6 (no
+     # re-training) run the evaluation using random seed 31415, same
+     # 1 cheese, 1 cat, and cat-smartness=.9, 16x16 grid
+
+     Mouse Winning Rate (from evaluation after training): 88.0103% (Average Success Rate)
+
+     (1 mark) Comparing the winning rates from Experiments #7 and #8 against
+     those from Experiment #6, what can you conclude about feature-
+     based Q-Learning in terms of its ability to deal with changes 
+     to the environment?
+
+    Feature-based Q-Learning allows the mouse to perform well in environments it hasn't 
+    been trained in. Since the QTable is not dependent on states (only weights are modified 
+    and saved) allowing the mouse to complete the optimal action in unvisited or new states
+    and new environments or seeds.
+     
+
+9 .- Carry out the following experiments:
+
+     (1 mark) # Experiment 9: Train your mouse using feature-based Q-Learning, on
+     # the 16x16 grid, 2 cats, and 3 cheeses, cat-smartness=.9,  
+     # random seed = 1522, and use 1000000 trials and 50 rounds. 
+
+     Initial mouse winning rate (first rate obtained when training starts): 8.6670%
+     
+     Mouse Winning Rate (from evaluation after training): 89.3519% (Average Success Rate)
+  
+     (1 mark) # Experiment 9: Using the trained weights from Experiment 9, (no
+     # re-training), run the evaluation on the 16x16 grid, 2 cats, 
+     # 3 cheeses, cat-smartness=.9, and random seed 4289
+     
+     Mouse Winning Rate (from evaluation after training): 87.4327% (Average Success Rate)
+
+     (1 mark) # Experiment 9: Using the trained weights from Experiment 9, (no
+     # re-training), run the evaluation on the 32x32 grid, 2 cats, 
+     # 3 cheeses, cat-smartness=.9, and random seed 4289
+     
+     Mouse Winning Rate (from evaluation after training): 90.8562% (Average Success Rate)
+
+     (2 marks) Based on the last 3 experiments, what can you conclude regarding
+     the usefulness and applicability of standard Q-Learning vs. 
+     feature-based Q-learning?
+
+	Feature-based Q-learning allows the mouse to perform well in various new environments
+	based on previously defined features. The mouses behaves similarly in mazes of
+	varying sizes or completely new mazes created by different seeds due to the features 
+	we've defined such as accounting for the cheese and cat distance. Things which
+	don't depend on the maze size or seed value.
+
+
+10 . - (2 marks) We obviously can not train an expensive robot by trial and error,
+      How would you implement feature-based Q-learning for a mobile bot so you
+      can take advantage of reinforcement learning but not spend millions on
+      broken robots that keep falling down the stairs?
+      
+	We can train the robot in a controlled environment such that it trains over various
+	factors such as height differenct, different areas of elevation, and more. This will
+	allow it to take into account a variety of factors while allowing it to be fairly
+	safe from damage as the robot's being trained.
+
+	Feature based Q-learning it kind of based on environment independent as specific
+	factos in the enviroment still have to be specified by the human training the robot
+	introducing it to an uncontrolled environment still results in the robot performing
+	successfully. Therefore the robot can respond to states it has never experienced
+	before as opposed to standard Q-learning.
+
+_____________________________________________________
+
+Mark with an 'x' where appropriate. If something is only
+working partially, briefly describe what works, what
+doesn't work, or what problems exist.
+	
+			Complete/Working	Partial		Not done
+
+QLearn update			X
+
+Reward function			X
+
+Decide action			X
+
+featureEval 			X
+
+evaluateQsa			X
+
+maxQsa_prime			X
+
+Qlearn_features			X
+
+decideAction_features		X
+
+_____________________________________________________
+
+Marking:
+
+(10 marks) Implemented QLearn update.
+
+(5 marks) Implemented a reasonable reward function
+
+(5 marks)  Implemented the function that chooses the
+           optimal action based on Qtable and
+           maze
+
+(15 marks) Implemented a non-trivial, good feature set
+	   and evaluation function
+
+(10 marks) Implemented a working feature-based Q-learning
+	   algorithm
+
+(20 marks) Competitive mouse performance
+
+(15 marks) Answers in this report file
+
+(- marks)  Penalty marks
+
+Total for A3:     74.4 / out of 80 (93%)
+

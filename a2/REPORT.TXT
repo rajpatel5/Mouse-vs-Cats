@@ -1,0 +1,172 @@
+CSC D84 - Artificial Intelligence
+
+Assignment 2 - MiniMax and Game Trees 
+
+This assignment is worth:
+
+10 AIUs (Artificial Intelligence Units)
+toward the assignment component of your final
+mark.
+
+________________________________________________
+
+Student Name 1 (last, first): Patel, Raj
+
+Student Name 2 (last, first): Patel, Harshit
+
+Student number 1: 1005240721
+
+Student number 2: 1004779215
+
+UTORid 1: patel732
+
+UTORid 2: patel564
+
+READ THIS AND SIGN YOUR NAME AT THE END:
+
+ I certify that I have read the UTSC code on academic
+honesty and plaguarism. All work submitted as part
+of this assignment is my own.
+
+	Signed: __Raj Patel__	__Harshit Patel__
+
+
+(-5 marks for failing to provide the identifying
+ information requested above)
+________________________________________________
+
+Answer the following questions. Be concise and clear
+but explain carefully when needed.
+
+1 .- (5 marks) Explain the design of your utility function.
+     Describe all the factors that influence its value, and
+     how their influence was evaluated and integrated into
+     a single, meaningful value. Convince us that your utility
+     makes sense!
+	
+ 	The value of the utility function is determined by 3 factors:
+     		1.) BFS distance to closest cat and BFS distance to closest cheese
+     		2.) Dead ends (cells blocking every direction except for the entrance)
+     		3.) Depth factor (how high it is up the search tree)
+
+	A.) we find the BFS distance to the nearest cheese and mouse.
+	If the mouse gets to a cheese, if a cat can not land on the same cheese at 
+	the same time the utility function value increases in favour of the mouse. 
+	Else the mouse ends up eaten by a cat, so the utility function value is decreased.
+
+	If no case from (A) applies, we calculate an intial utility value to which some value 
+	is taken away based on how close the nearest cat is and some value is added based on how 
+	close the nearest cheese is. The closer the cat the lower the utility value will be, and 
+	the closer the cheese, the higher th utility value will be. 
+
+	Also, we take the difference between the distance to the nearest cheese and distance to 
+	the nearest cat to refine the initial utility calculated. If the nearest cat is closer to 
+	the mouse than the nearest cheese, depending on how much the difference, a value is subtracted 
+	from the initial utility. If the nearest cheese is closer to the mouse than the nearest cat, 
+	a value is added to the initial utility depending on how much the difference favors the cheese.
+
+	Now, we check for cells that are dead ends. If the cat is close enough, say k cells away, then 
+	that dead end cell is given a very low utility value. If a cheese is within one of these dead ends, the 		utility value is reduced drastically (If the cheese is in a dead end, and the nearest cat is too close
+	to the mouse, we give the utility function a very low value to allow the mouse to make a decision to run 		away). 
+	
+		Note: This will result in all cheeses located in dead ends to be considered at the end (after all 			other cheeses are taken by the mouse). If there is only one cheese left, we will go for that 				cheese, so we will greatly increase the utility function. 
+
+	Lastly, depending on how far down the leaf node is, it will be given priority by adding a high value to the 	utility value. This helps the mouse pick a slightly better cell if multiple paths return the same utility 		value to the root.
+
+
+2 .- (2 marks) Ignoring computation time, what is the effect of
+     search depth (number of turns) on the chances of the mouse
+     winning the game. 
+	
+	Higher search depth means the mouse will get a better result for it's next move since 
+	more cells are considered, thereby increasing the chances of the mouse winning.
+
+
+3 .- (2 marks) What situations will cause your mouse to lose?
+     can these be fixed either with the utility function, or
+     by changing the search depth? if so, how?
+	
+	When multiple cats of high smartness corner the mouse or when
+     	multiple cheeses exist at dead end cells(Usually followed by very smart cats). 
+	
+	If there is a dead end in which the search depth cannot "get out of", the mouse gets 
+	stuck in the dead end cell until a cat comes. For example, if it takes 7 moves to get 
+	out of the dead end, and search depth is set to 5, the mouse will not get out.
+	
+ 	This can be improved by determining if a cell is within a dead end path by attempting to 
+	detect cycles in the graph. If a cycle exists, the cells in the cycle are 
+	not part of a dead end, so these cells would be given a higher utility value depending 
+	on the size of the cycle. Cells not part of a cycle would be given a lower utility.
+
+4 .- (2 marks) Compare cats with smartness=.8 against cats with
+     smartness=1 - which are harder for your mouse to beat?
+     why do you think that is?
+
+	It is harder because the cats could make a move that could
+     	throw off the mouse, this could lead to the mouse getting cornered.
+
+
+5 .- (2 marks) Can the mouse be made unbeatable by having an
+     optimal utility function?
+	
+	No, there will always be at least one case where the mouse fails,
+     	since the utility function depends on weights. We can
+     	optimize the utility as much as possible but in the end we will
+	have to choose certain cases that enhance our utility function 
+	while others make it less ideal.
+
+
+6 .- (2 bonus marks) Could a human playing the game in place
+      of the mouse do better than your code? (yes, no, and
+      a reasonable explanation of why)
+
+	Yes because humans can adapt to the moves of the cats.
+      	Humans have some kind of an "optimal utility" advantage. Humans
+	would rather go for the safer cheese than the closest, which is how 
+	more or less this code is designed. 
+
+_____________________________________________________
+
+Mark with an 'x' where appropriate. If something is only
+working partially, briefly describe what works, what
+doesn't work, or what problems exist.
+	
+	Complete/Working	Partial		Not done
+
+Utility
+function	X
+
+MiniMax		X
+
+Alpha/Beta
+pruning		X
+_____________________________________________________
+
+Marking:
+
+(10 marks) Implemented a non-trivial, clever, and
+           effective utility function. It allows the
+           mouse to win the game often. 
+
+(10 marks) Correctly implementing MiniMax. The algorithm
+           should produce the expected behaviour. The
+           mouse should take a reasonable path to the
+           cheese and avoid cats. The cats will try to
+           catch the mouse. Mouse is not easy to catch.
+
+(10 marks) Implemented alpha-beta pruning. The algorithm
+           significantly reduces the amount of search
+           while producing identical results as those
+           from standard MiniMax 
+
+(15 marks) Competitive (TA assigned) based on how smart
+           your mouse is (this is related to your
+           utility function above!)
+
+(15 marks) Answers in this report file
+
+(2 bonus)  Bonus!
+
+Total for A2:     58.8  / out of 60 (98%)
+
+

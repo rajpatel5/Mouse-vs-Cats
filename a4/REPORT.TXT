@@ -1,0 +1,153 @@
+CSC D84 - Artificial Intelligence
+
+Assignment 4 - Neural Networks for OCR
+
+This assignment is worth:
+
+10 AIUs (Artificial Intelligence Units)
+toward the assignment component of your final
+mark.
+
+________________________________________________
+
+Student Name 1 (last, first): Patel, Raj
+
+
+Student Name 2 (last, first): Patel, Harshit
+
+Student number 1: 1005240721
+
+Student number 2: 1004779215
+
+UTORid 1: patel732
+
+UTORid 2: patel564
+
+READ THIS AND SIGN YOUR NAME AT THE END:
+
+ I certify that I have read the UTSC code on academic
+honesty and plaguarism. All work submitted as part
+of this assignment is my own.
+
+    Signed: __Raj Patel__      __Harshit Patel__
+
+
+(-5 marks for failing to provide the identifying
+ information requested above)
+________________________________________________
+
+Answer the following questions. Be concise and clear
+but explain carefully when needed.
+
+1 .- (1 marks) Train a 1-layer network using the Logistic activation
+               function. 
+
+	       Copy/paste the reported classification rates for:
+	 	
+	       Training data (last training round):
+
+	       Testing data:
+
+
+2 .- (1 marks) Repeat the process using the hyperbolic tangent activation
+	       function.
+
+		
+
+3 .- (1 marks) Which type of activation function yielded the best classification
+	       results? which one learned faster?
+	
+	The tanh function yielded a better result, however, the logistics function learned quicker. The 	logistics function averaged 35% classification rate in the first round while the hyperbolic tangent 		started with 70%, but tanh slightly outperformed the logistic function.
+
+
+4 .- (1 marks) Train a 2-layer network with hyperbolic-tangent activation, using
+	       150 hidden units. Report the classification rates on training and
+	       testing data just as for 1) and 2).	       
+	       
+	
+5 .- (1 marks) Same as 4), except use 10 hidden units instead
+
+	
+6 .- (1 marks) Same as 5), except use 3 hidden units instead
+	
+
+7 .- (3 marks) Comment on the experiments in 4, 5, and 6, and give your conclusion
+	       regarding the effect of the number of hidden units on classification
+	       accuracy. 
+
+	       What is the network with 3 hidden telling you about this classification
+	       problem?
+
+	As we reduce the number of hidden layers in an experiment, we are also reducing the accuracy of the 		classification. The network with 3 hidden layers tells us that the classification requires more 	features to be trained and a more granular representation of the character being recognized.
+
+
+8 .- (3 marks) Train the best performing network you can. Use any activation function
+	       you wish, and set the number of hidden units so as to achieve the best
+	       performance.
+
+	       Number of hidden units used:
+
+	       Classification rate on testing data:
+
+
+9 .- (3 marks) Describe how you would build a network to play the cat
+	        and mouse game (move the mouse to help it survive).
+
+		- Describe what the input is in terms of a vector of
+		  values
+		- Describe what the output layer looks like (how many
+		  neurons and what they encode)
+		- Describe the error function
+		- How many layers should you use?
+
+	Inputs: we would use the manhattan distance from the cheeses and cats. Also the number of walls 		around each cheese. 
+
+	Outer Layer: There will be 5 neurons and each will encode the possible moves the mouse can make (up, down, right, left, and stay). 
+
+	Error function: We will use tanh. 
+
+	Number of Layers: 2 * (# cheeses) + (# cats) + 5
+	
+_____________________________________________________
+
+Mark with an 'x' where appropriate. If something is only
+working partially, briefly describe what works, what
+doesn't work, or what problems exist.
+	
+        	Complete/Working	Partial		Not done
+
+Logistic
+ activation		X
+ 
+Tanh
+ activation		X
+
+1L Feed-forward		X  
+
+1L Backprop		X
+
+1L Classify		X
+
+2L Feed-forward		X
+
+2L Backprop		X
+
+2L Classify		X
+_____________________________________________________
+
+Marking:
+
+(10) one-layer, logistic network trains and classifies
+
+(5)  one-layer, tanh network trains and classifies
+
+(15) two-layer, tanh network trains and classifies
+
+(5) two-layer, logistic network trains and classifies
+
+(5 marks) Can train 2-layer networks with either activation function
+	  and any number of hidden units
+
+(15 marks) Answers in this report
+
+Total for A4:      45 / out of 50 (90%)
